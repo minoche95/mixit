@@ -1,7 +1,7 @@
 // Initialisation Swup
 const swup = new Swup();
 
-// Fonction de recherche (globale pour que le oninput fonctionne)
+// Fonction de recherche existante
 window.search = function() {
     let input = document.getElementById('searchBar').value.toLowerCase();
     let cards = document.getElementsByClassName('card');
@@ -15,8 +15,60 @@ window.search = function() {
     }
 }
 
+// Récupérer et afficher les cocktails
+async function fetchAndDisplayCocktails() {
+    const cardsContainer = document.querySelector('.cards');
+    
+    // Vérifier qu'on est sur la page des cards
+    if (!cardsContainer) return; 
+
+    try {
+        // Appel d'API (liste les cockails qui commencent par A)
+        const response = await fetch('https://www.thecocktaildb.com/api/json/v1/1/search.php?f=a');
+        const data = await response.json();
+
+        // Limitation par rapport au nombre de cards
+        const cocktails = data.drinks.slice(0, 4);
+
+        cocktails.forEach((cocktail, index) => {
+            // Afficher avec/sans alcool
+            const isAlcoholic = cocktail.strAlcoholic; 
+
+            // HTML de la card avec les données de l'API
+            const cardHTML = `
+            <div class="card-wrapper">
+                <article class="card" style="--card-bg: #29395d;" data-tilt data-tilt-glare data-tilt-max-glare="0.5"> 
+                    <div class="inner-border">
+                        <h3>${cocktail.strDrink}</h3>
+                        <img src="${cocktail.strDrinkThumb}/small" alt="${cocktail.strDrink}" class="cocktail-img">
+                        <p class="deg">${isAlcoholic}</p>
+                        <input type="checkbox" id="fav${index}" class="fav_checkbox">
+                        <label for="fav${index}" class="fav_heart">❤</label>
+                    </div>
+                </article>
+            </div>
+            `;
+            // Ajouter la card dans le HTML
+            cardsContainer.insertAdjacentHTML('beforeend', cardHTML);
+        });
+
+        // Reinitialiser VanillaTilt pour que l'effet s'applique aux cards
+        const tiltElements = document.querySelectorAll("[data-tilt]"); 
+        if (tiltElements.length > 0 && typeof VanillaTilt !== 'undefined') {
+            VanillaTilt.init(tiltElements);
+        }
+
+    } catch (error) {
+        console.error("Erreur lors de la récupération des cocktails :", error);
+        cardsContainer.innerHTML = "<p style='color: white;'>Impossible de charger les cocktails.</p>";
+    }
+}
+
 // Fonction init 
 function init() {
+    // Lancement de la récupération et de l'affichage des cartes via l'API
+    fetchAndDisplayCocktails();
+
     // Initialisation Vanilla Tilt
     const tiltElements = document.querySelectorAll("[data-tilt]"); 
     // Verification de cartes et librairie
@@ -48,7 +100,7 @@ function init() {
             errorContainer.classList.remove('visible');
             successContainer.classList.remove('visible');
 
-            // --- VERIFICATION PSEUDO ---
+            // VERIFICATION PSEUDO
             if(pseudo.value.length < 5) {
                 errorContainer.classList.add('visible');
                 pseudo.classList.remove('success');
@@ -59,7 +111,7 @@ function init() {
                 pseudo.classList.add('success');
             }
 
-            // --- VERIFICATION EMAIL ---
+            // VERIFICATION EMAIL
             if(email.value.length === 0) {
                 errorContainer.classList.add('visible');
                 email.classList.remove('success');
@@ -70,7 +122,7 @@ function init() {
                 email.classList.add('success');
             }
 
-            // --- VERIFICATION MOT DE PASSE ---
+            // VERIFICATION MOT DE PASSE
             let passCheck = new RegExp("^(?=.*[A-Z])(?=(?:.*[-+_!@#$%^&*.,?]){2}).+$");
 
             if(password.value.length < 8 || passCheck.test(password.value) == false) {
@@ -83,7 +135,7 @@ function init() {
                 password.classList.add('success');
             }
 
-            // --- CONFIRMATION MDP ---
+            // CONFIRMATION MDP
             if(passwordRepeat.value.length === 0 || passwordRepeat.value !== password.value) {
                 errorContainer.classList.add('visible');
                 passwordRepeat.classList.remove('success');
@@ -94,7 +146,7 @@ function init() {
                 passwordRepeat.classList.add('success');
             }
 
-            // --- VALIDATION FINALE ---
+            // VALIDATION FINALE
             if(
                 pseudo.classList.contains('success') &&
                 email.classList.contains('success') &&

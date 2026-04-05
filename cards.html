@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mixit</title>
+    <title>Mixit - Cocktails</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Neonderthaw&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 </head>
@@ -20,67 +20,19 @@
         </article>
     </header>
 
-
     <main id="swup" class="transition-fade">
         <section class="card-container">
             <input type="search" placeholder="Rechercher" class="search-bar" id="searchBar" oninput="search()">
 
-            <section class="cards">
-                <div class="card-wrapper">
-                    <article class="card" style="--card-bg: #5c0808;" data-tilt data-tilt-glare data-tilt-max-glare="0.5"> 
-                        <div class="inner-border">
-                            <h3>Negroni</h3>
-                            <img src="img/negroni.png" alt="negroni" class="cocktail-img">
-                            <p class="deg">28°</p>
-                            <input type="checkbox" id="fav1" class="fav_checkbox">
-                            <label for="fav1" class="fav_heart">❤</label>
-                        </div>
-                    </article>
-                </div>
-
-                <div class="card-wrapper">
-                    <article class="card" style="--card-bg: #ee6a75;" data-tilt data-tilt-glare data-tilt-max-glare="0.5">
-                        <div class="inner-border">
-                            <h3>Paloma</h3>
-                            <img src="img/paloma.png" alt="paloma" class="cocktail-img">
-                            <p class="deg">12.2°</p>
-                            <input type="checkbox" id="fav2" class="fav_checkbox">
-                            <label for="fav2" class="fav_heart">❤</label>
-                        </div>
-                    </article>
-                </div>
-
-                <div class="card-wrapper">
-                    <article class="card" style="--card-bg: #372214;" data-tilt data-tilt-glare data-tilt-max-glare="0.5">
-                        <div class="inner-border">
-                            <h3>Espresso Martini</h3>
-                            <img src="img/espresso-martini.png" alt="espresso-martini" class="cocktail-img">
-                            <p class="deg">16°</p>
-                            <input type="checkbox" id="fav3" class="fav_checkbox">
-                            <label for="fav3" class="fav_heart">❤</label>
-                        </div>
-                    </article>
-                </div>
-
-                <div class="card-wrapper">
-                    <article class="card" style="--card-bg: #8d8547;" data-tilt data-tilt-glare data-tilt-max-glare="0.5">
-                        <div class="inner-border">
-                            <h3>French 75</h3>
-                            <img src="img/french-75.png" alt="french-75" class="cocktail-img">
-                            <p class="deg">17°</p>
-                            <input type="checkbox" id="fav4" class="fav_checkbox">
-                            <label for="fav4" class="fav_heart">❤</label>
-                        </div>
-                    </article>
-                </div>
-            </section>
+            <section class="cards" id="cards-container">
+                </section>
         </section>
     </main>
-
 
     <footer>
 
     </footer>
+    
     <script defer src="https://unpkg.com/swup@4"></script>
     <script defer src="https://unpkg.com/vanilla-tilt@1.7.2/dist/vanilla-tilt.min.js"></script>
     <script defer type="module" src="https://unpkg.com/@google/model-viewer@latest/dist/model-viewer.min.js"></script>
